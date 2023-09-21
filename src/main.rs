@@ -2,8 +2,7 @@ mod library;
 mod person;
 
 use library::library::{Books, Library};
-use person::person::PersonImpl;
-use crate::person::person::Person;
+use person::person::{Person, PersonImpl};
 
 fn main() {
     let mut library = Library::new();
