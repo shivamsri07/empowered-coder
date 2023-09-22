@@ -2,12 +2,13 @@ pub mod library {
     pub struct Books {
         name: String,
         author_name: String,
-        is_available: bool
+        is_available: bool,
+        borrowed_by: Option<String>
     }
 
     impl Books {
         pub fn new(name: String, author_name: String) -> Self {
-            Books { name, author_name, is_available: true }
+            Books { name, author_name, is_available: true, borrowed_by: None}
         }
 
         pub fn name(&self) -> &String {
@@ -18,7 +19,8 @@ pub mod library {
             self.is_available
         }
 
-        pub fn borrow(&mut self) {
+        pub fn borrow(&mut self, borrowed_by: String) {
+            self.borrowed_by = Some(borrowed_by);
             self.is_available = false;
         }
 
@@ -40,10 +42,10 @@ pub mod library {
             self.books.push(book);
         }
 
-        pub fn borrow_book(&mut self, name: &String) {
+        pub fn borrow_book(&mut self, name: &str, borrowed_by: &str) {
             for book in self.books.iter_mut() {
                 if book.name() == name && book.is_available() {
-                    book.borrow();
+                    book.borrow(borrowed_by.to_string());
                     println!("{} is borrowed!", book.name())
                 }
             }
@@ -56,6 +58,17 @@ pub mod library {
                     println!("{} is returned!", book.name())
                 }
             }
+        }
+
+        pub fn list_checkout_books(&self) {
+            println!("List of checked out books:");
+            self.books.iter().filter(|book| !book.is_available)
+            .for_each(|book| println!("Book :: {} | Author :: {}", book.name, book.author_name));
+        }
+    
+        pub fn list_available_books(&self) {
+            println!("List of available books:");
+           self.books.iter().filter(|book| book.is_available).for_each(|book| println!("Book :: {} | Author :: {}", book.name, book.author_name));
         }
     }
 }

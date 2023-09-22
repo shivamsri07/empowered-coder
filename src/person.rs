@@ -1,26 +1,16 @@
-pub mod person {
-    pub trait Person {
-        fn name(&self) -> &String;
-        fn age(&self) -> usize;
-        fn new(name: String, age: usize) -> Self;
+
+pub struct Person {
+    pub name: String,
+    pub age: usize,
+}
+
+impl Person {
+
+    pub fn new(name: String, age: usize) -> Self {
+        Person { name, age }
     }
 
-    pub struct PersonImpl {
-        name: String,
-        age: usize,
-    }
-
-    impl Person for PersonImpl {
-        fn name(&self) -> &String {
-            &self.name
-        }
-
-        fn age(&self) -> usize {
-            self.age
-        }
-
-        fn new(name: String, age: usize) -> Self {
-            PersonImpl { name, age }
-        }
+    pub fn display(&self) {
+        println!("Name :: {} | Age :: {}", self.name, self.age)
     }
 }
